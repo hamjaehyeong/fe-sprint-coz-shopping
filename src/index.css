@@ -8,4 +8,5 @@ body{
     justify-content: center;
     align-items: center;
     background-color: rgb(202, 202, 226);
+    min-width: 1280px;
 }
