@@ -69,7 +69,7 @@ function Header() {
             </div>
             <div className="rightSection">
                 <img className="hamburger_img" src={hamburgerButton} alt="menu button" onClick={handleDropdown} />
-                {showDropdown && <div ref={dropdownRef}><Dropdown /></div>}
+                {showDropdown && <div ref={dropdownRef}><Dropdown handleDropdown={handleDropdown}/></div>}
             </div>
         </HeaderContainer>
     );
