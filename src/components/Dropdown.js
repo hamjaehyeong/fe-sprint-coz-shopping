@@ -13,8 +13,7 @@ export const DropdownContainer = styled.div`
   flex-direction:column;
   background-color:white;
   border-radius:12px;
-  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
-  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
 
   .dropdownList{
     flex: 1 0 auto;
