@@ -17,7 +17,7 @@ padding-left:76px;
 padding-right:76px;
 box-shadow: 0 8px 8px 0px rgba(0, 0, 0, 0.1);
 background-color:white;
-
+z-index: 10;
 .leftSection{
     display:flex;
     flex-direction:row;

@@ -1,5 +1,6 @@
 
 import styled from "styled-components"
+import { useState, useEffect } from "react";
 import bookmarkOn from '../img/bookmark-on.png';
 import bookmarkOff from '../img/bookmark-off.png';
 
@@ -23,7 +24,7 @@ font-size:16px;
     height:24px;
     opacity:1.0;
 }
-img{
+.itemImg{
     width:264px;
     height:210px;
     border-radius:12px;
@@ -45,14 +46,28 @@ img{
 
 `
 
-function Item({item, bookmarkedItems, setBookmarkedItems, handleBookmark}) {
+function Item({item, bookmarkedItems, setBookmarkedItems}) {
+
+    const [isBookmarked, setIsBookmarked] = useState(false);
+
+    useEffect(() => {
+        setIsBookmarked(bookmarkedItems.some(bookmarkedItem => bookmarkedItem.id === item.id));
+      }, [bookmarkedItems]);
+
+      const handleBookmark = (item) => {
+        if (isBookmarked) {
+          setBookmarkedItems(bookmarkedItems.filter(el => el.id !== item.id));
+        } else {
+          setBookmarkedItems([item, ...bookmarkedItems]);
+        }
+      }
 
     if (item.type === 'Product') {
         return (
         <ItemContainer>
             <div className="imgContainer">
-                <img src={item.image_url} alt="item"/>
-                <img src={bookmarkOff} className="bookmark" alt="bookmarkIcon"
+                <img src={item.image_url} alt="item" className="itemImg"/>
+                <img src={isBookmarked ? bookmarkOn : bookmarkOff} className="bookmark" alt="bookmarkIcon" onClick={()=>handleBookmark(item)}
                 />
             </div>
             <div className="content">
@@ -68,7 +83,10 @@ function Item({item, bookmarkedItems, setBookmarkedItems, handleBookmark}) {
     else if (item.type === 'Category') { 
         return (
         <ItemContainer>
-            <div className="imgContainer"><img src={item.image_url} alt="item"/><img src={bookmarkOff} className="bookmark" alt="bookmarkIcon"/></div>
+            <div className="imgContainer">
+                <img src={item.image_url} alt="item" className="itemImg"/>
+                <img src={isBookmarked ? bookmarkOn : bookmarkOff} className="bookmark" alt="bookmarkIcon" onClick={()=>handleBookmark(item)}/>
+            </div>
             <div><p className="itemTitle"># {item.title}</p></div>
         </ItemContainer>
     );
@@ -76,7 +94,10 @@ function Item({item, bookmarkedItems, setBookmarkedItems, handleBookmark}) {
     else if (item.type === 'Brand') {
         return (
             <ItemContainer>
-                <div className="imgContainer"><img src={item.brand_image_url}  alt="item"/><img src={bookmarkOff} className="bookmark" alt="bookmarkIcon"/></div>
+                <div className="imgContainer">
+                    <img src={item.brand_image_url}  alt="item" className="itemImg"/>
+                    <img src={isBookmarked ? bookmarkOn : bookmarkOff} className="bookmark" alt="bookmarkIcon" onClick={()=>handleBookmark(item)}/>
+                </div>
                 <div className="content">
                     <div className="left"><p className="itemTitle">{item.brand_name}</p></div>
                     <div className="right">
@@ -90,7 +111,10 @@ function Item({item, bookmarkedItems, setBookmarkedItems, handleBookmark}) {
     else if (item.type === 'Exhibition') {
         return (
             <ItemContainer>
-            <div className="imgContainer"><img src={item.image_url} alt="item"/><img src={bookmarkOff} className="bookmark" alt="bookmarkIcon"/></div>
+            <div className="imgContainer">
+                <img src={item.image_url} alt="item" className="itemImg"/>
+                <img src={isBookmarked ? bookmarkOn : bookmarkOff} className="bookmark" alt="bookmarkIcon" onClick={()=>handleBookmark(item)}/>
+            </div>
             <div><p className="itemTitle">{item.title}</p><p>{item.sub_title}</p></div>
             </ItemContainer>
         );

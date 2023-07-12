@@ -20,9 +20,8 @@ margin-top:12px;
 margin-bottom:12px;
 `
 
-function MainPage(bookmarkedItems, setBookmarkedItems, handleBookmark) {
+function MainPage({bookmarkedItems, setBookmarkedItems}) {
     const [listData, setListData] = useState([]);
-    
     useEffect(() =>{
         fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=4')
             .then(response => {
@@ -35,6 +34,7 @@ function MainPage(bookmarkedItems, setBookmarkedItems, handleBookmark) {
             .catch(error => console.error(error))}
     ,[])
 
+
     return (
         <MainPageContainer>
             <div>
@@ -46,20 +46,18 @@ function MainPage(bookmarkedItems, setBookmarkedItems, handleBookmark) {
                     item={item} 
                     bookmarkedItems={bookmarkedItems} 
                     setBookmarkedItems={setBookmarkedItems}
-                    handleBookmark={handleBookmark}
                     />)}
                 </ListContainer>
             </div>
             <div>
                 <h2>북마크 리스트</h2>
                 <ListContainer>
-                {listData.map((item,idx)=>
+                {bookmarkedItems.slice(0, 4).map((item,idx)=>
                     <Item 
                     key={idx} 
                     item={item} 
                     bookmarkedItems={bookmarkedItems} 
                     setBookmarkedItems={setBookmarkedItems}
-                    handleBookmark={handleBookmark}
                     />)}
                 </ListContainer>
                 </div>
