@@ -69,9 +69,9 @@ function Item({item, bookmarkedItemsId, setBookmarkedItemsId, handleShowModal, n
 
     useEffect(() => {
         setIsBookmarked(bookmarkedItemsId.includes(item.id));
-      }, [bookmarkedItemsId]);
+      }, [bookmarkedItemsId, item]);
 
-      const handleBookmark = (item) => {
+      const handleBookmark = () => {
         if (isBookmarked) {
           setBookmarkedItemsId(prevItems => prevItems.filter(itemId => itemId !== item.id));
           notifyDelete();
@@ -88,7 +88,7 @@ function Item({item, bookmarkedItemsId, setBookmarkedItemsId, handleShowModal, n
                 <img src={item.image_url} alt="item" className="itemImg" 
                 onClick={()=>handleShowModal(item)}/>
                 <img src={isBookmarked ? bookmarkOn : bookmarkOff} 
-                className="bookmarkIcon" alt="bookmarkIcon" onClick={()=>handleBookmark(item)}
+                className="bookmarkIcon" alt="bookmarkIcon" onClick={handleBookmark}
                 />
             </div>
             <div className="content">
@@ -108,7 +108,7 @@ function Item({item, bookmarkedItemsId, setBookmarkedItemsId, handleShowModal, n
                 <img src={item.image_url} alt="item" className="itemImg" 
                 onClick={()=>handleShowModal(item)}/>
                 <img src={isBookmarked ? bookmarkOn : bookmarkOff} 
-                className="bookmarkIcon" alt="bookmarkIcon" onClick={()=>handleBookmark(item)}/>
+                className="bookmarkIcon" alt="bookmarkIcon" onClick={handleBookmark}/>
             </div>
             <div><p className="itemTitle"># {item.title}</p></div>
         </ItemContainer>
@@ -121,7 +121,7 @@ function Item({item, bookmarkedItemsId, setBookmarkedItemsId, handleShowModal, n
                     <img src={item.brand_image_url}  alt="item" className="itemImg" 
                     onClick={()=>handleShowModal(item)}/>
                     <img src={isBookmarked ? bookmarkOn : bookmarkOff} 
-                    className="bookmarkIcon" alt="bookmarkIcon" onClick={()=>handleBookmark(item)}/>
+                    className="bookmarkIcon" alt="bookmarkIcon" onClick={handleBookmark}/>
                 </div>
                 <div className="content">
                     <div className="left"><p className="itemTitle">{item.brand_name}</p></div>
@@ -140,7 +140,7 @@ function Item({item, bookmarkedItemsId, setBookmarkedItemsId, handleShowModal, n
                 <img src={item.image_url} alt="item" className="itemImg" 
                 onClick={()=>handleShowModal(item)}/>
                 <img src={isBookmarked ? bookmarkOn : bookmarkOff} 
-                className="bookmarkIcon" alt="bookmarkIcon" onClick={()=>handleBookmark(item)}/>
+                className="bookmarkIcon" alt="bookmarkIcon" onClick={handleBookmark}/>
             </div>
             <div><p className="itemTitle">{item.title}</p><p className="subTitle">{item.sub_title}</p></div>
             </ItemContainer>

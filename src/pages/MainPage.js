@@ -35,8 +35,8 @@ function MainPage({ bookmarkedItemsId, setBookmarkedItemsId, handleShowModal, no
         // bookmarkedItemsId에 해당하는 아이템들을 찾아 bookmarkedItems 상태를 업데이트합니다.
         const newBookmarkedItems = listData.filter(item => bookmarkedItemsId.includes(item.id));
         setBookmarkedItems(newBookmarkedItems);
-      }, [listData, bookmarkedItemsId]); 
-
+      }, [listData, bookmarkedItemsId]);
+      
     useEffect(() => {
         fetch('http://cozshopping.codestates-seb.link/api/v1/products')
             .then(response => {

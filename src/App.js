@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route,  useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { useState, useEffect, useRef } from "react";
 
@@ -40,7 +40,6 @@ function App() {
     setShowModal(!showModal);
   }
 
-  // useEffect(() => console.log(bookmarkedItemsId), [bookmarkedItemsId]);
   const CloseButton = ({ closeToast }) => (
     <i
       className="material-icons"
@@ -76,7 +75,7 @@ function App() {
 ///////////////////////////////////////////////////////////////////
   // 먼저 보여지는 아이템의 수를 상태로 설정합니다. 초기값은 12입니다.
 const [visibleItemsCount, setVisibleItemsCount] = useState(12);
-
+useEffect(()=>console.log(visibleItemsCount),[visibleItemsCount]);
 // useRef를 이용하여 .App 엘리먼트에 대한 참조를 생성합니다. 
 const appRef = useRef();
 
@@ -92,7 +91,6 @@ useEffect(() => {
     // .App 요소의 높이보다 100 픽셀 작다면 (즉, 스크롤이 하단 100픽셀 이내로 내려왔다면),
     // 아이템을 더 로드합니다.
     if (scrollHeight - scrollTop <= clientHeight + 100) {
-      console.log("Bottom of the div has been reached.");
       setVisibleItemsCount((prevValue) => prevValue + 12);
     }
   };
@@ -109,8 +107,8 @@ useEffect(() => {
 }, []); 
 
 
-///////////////////////////////////////////////////////////
-  
+  ///////////////////////////////////////////////////////////
+
   return (
     <BrowserRouter>
       <div className="App" ref={appRef}>
@@ -132,8 +130,16 @@ useEffect(() => {
                 notifyAdd={notifyAdd}
                 notifyDelete={notifyDelete}
                 visibleItemsCount={visibleItemsCount}
-                />}></Route>
-            <Route path="/bookmark" element={<BookmarkPage />}></Route>
+                setVisibleItemsCount={setVisibleItemsCount}
+              />}></Route>
+            <Route path="/bookmark" element={<BookmarkPage
+              bookmarkedItemsId={bookmarkedItemsId}
+              setBookmarkedItemsId={setBookmarkedItemsId}
+              handleShowModal={handleShowModal}
+              notifyAdd={notifyAdd}
+              notifyDelete={notifyDelete}
+              visibleItemsCount={visibleItemsCount}
+              setVisibleItemsCount={setVisibleItemsCount}/>}></Route>
           </Routes>
           {showModal ? <Modal clickedItem={clickedItem}
             bookmarkedItemsId={bookmarkedItemsId}

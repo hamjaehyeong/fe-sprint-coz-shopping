@@ -22,37 +22,48 @@ font-size:16px;
 .filter{
     display:flex;
 }
-.filterItem{
+
+`
+const FilterItem = styled.div`
     display:flex;
     flex-direction:column;
     align-items:center;
     margin-right:36px;
+    text-decoration: ${props => props.selected ? 'underline' : 'none'};
     &:hover{
     cursor: pointer;
 }
     &:last-of-type{
         margin-right:0px;
     }
-}
+
 .filterImg{
     width:82px;
     height:82px;
     margin-bottom:4px;
 }
 `
+
 export const ListContainer = styled.ul`
 display:flex;
-justify-content:space-between;
 margin-top:12px;
 margin-bottom:12px;
 height:auto;
 width:1128px;
 flex-wrap: wrap;
+& > *{
+    margin-right: 24px;
+  }
+
+& > *:nth-child(4n) {
+    margin-right: 0px;
+  }
 `
 
-function ProductsListPage({bookmarkedItemsId, setBookmarkedItemsId, handleShowModal, notifyAdd, notifyDelete, visibleItemsCount}) {
+function ProductsListPage({bookmarkedItemsId, setBookmarkedItemsId, handleShowModal, notifyAdd, notifyDelete, visibleItemsCount, setVisibleItemsCount}) {
     const [listData, setListData] = useState([]);
     const [selectedFilter, setSelectedFilter] = useState('');
+    useEffect(()=>setVisibleItemsCount(12),[selectedFilter])
 
     useEffect(() =>{
         fetch('http://cozshopping.codestates-seb.link/api/v1/products')
@@ -65,18 +76,17 @@ function ProductsListPage({bookmarkedItemsId, setBookmarkedItemsId, handleShowMo
             .then(json => setListData([...json]))
             .catch(error => console.error(error))}
     ,[])
-    useEffect(()=>console.log(listData),[listData])
 
 
 
     return (
         <ProductListPageContainer>
             <div className="filter">
-                <div className="filterItem" onClick={()=>setSelectedFilter('')}><img className="filterImg"src={all} alt="all"/><span>전체</span></div>
-                <div className="filterItem" onClick={()=>setSelectedFilter('Product')}><img className="filterImg"src={product} alt="product"/><span>상품</span></div>
-                <div className="filterItem" onClick={()=>setSelectedFilter('Category')}><img className="filterImg"src={category} alt="category"/><span>카테고리</span></div>
-                <div className="filterItem" onClick={()=>setSelectedFilter('Exhibition')}><img className="filterImg"src={exhibition} alt="exhibition"/><span>기획전</span></div>
-                <div className="filterItem" onClick={()=>setSelectedFilter('Brand')}><img className="filterImg"src={brand} alt="brand"/><span>브랜드</span></div>
+                <FilterItem onClick={()=>setSelectedFilter('')} selected={selectedFilter === ''} ><img className="filterImg"src={all} alt="all"/><span>전체</span></FilterItem>
+                <FilterItem onClick={()=>setSelectedFilter('Product')} selected={selectedFilter === 'Product'}><img className="filterImg"src={product} alt="product"/><span>상품</span></FilterItem>
+                <FilterItem onClick={()=>setSelectedFilter('Category')} selected={selectedFilter === 'Category'}><img className="filterImg"src={category} alt="category"/><span>카테고리</span></FilterItem>
+                <FilterItem onClick={()=>setSelectedFilter('Exhibition')} selected={selectedFilter === 'Exhibition'}><img className="filterImg"src={exhibition} alt="exhibition"/><span>기획전</span></FilterItem>
+                <FilterItem onClick={()=>setSelectedFilter('Brand')} selected={selectedFilter === 'Brand'}><img className="filterImg"src={brand} alt="brand"/><span>브랜드</span></FilterItem>
             </div>
             <ListContainer>
             {listData.filter(item=> selectedFilter? item.type===selectedFilter : true)
