@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route,  useLocation } from "react-router-dom";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import './App.css';
 
@@ -19,7 +19,7 @@ import bookmarkOff from './img/bookmark-off.png';
 
 
 function App() {
-  const [bookmarkedItems, setBookmarkedItems] = useState(() => {
+  const [bookmarkedItemsId, setBookmarkedItemsId] = useState(() => {
     const savedItems = localStorage.getItem('myBookmark');
     if (savedItems) {
       return JSON.parse(savedItems);
@@ -29,8 +29,8 @@ function App() {
   });
 
   useEffect(() => {
-    localStorage.setItem('myBookmark', JSON.stringify(bookmarkedItems));
-  }, [bookmarkedItems]);
+    localStorage.setItem('myBookmark', JSON.stringify(bookmarkedItemsId));
+  }, [bookmarkedItemsId]);
 
   const [showModal, setShowModal] = useState(false);
   const [clickedItem, setClickedItem] = useState('');
@@ -40,7 +40,7 @@ function App() {
     setShowModal(!showModal);
   }
 
-  // useEffect(() => console.log(bookmarkedItems), [bookmarkedItems]);
+  // useEffect(() => console.log(bookmarkedItemsId), [bookmarkedItemsId]);
   const CloseButton = ({ closeToast }) => (
     <i
       className="material-icons"
@@ -73,26 +73,71 @@ function App() {
     }
   });
 
+///////////////////////////////////////////////////////////////////
+  // 먼저 보여지는 아이템의 수를 상태로 설정합니다. 초기값은 12입니다.
+const [visibleItemsCount, setVisibleItemsCount] = useState(12);
 
+// useRef를 이용하여 .App 엘리먼트에 대한 참조를 생성합니다. 
+const appRef = useRef();
+
+useEffect(() => {
+  // 스크롤 이벤트 핸들러를 정의합니다. 
+  const handleScroll = (e) => {
+    // scrollTop: .App 요소에서 현재 스크롤된 영역의 높이
+    // clientHeight: .App 요소의 높이
+    // scrollHeight: .App 요소의 총 내용 높이
+    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+
+    // 만약 .App 요소의 총 내용 높이에서 현재 스크롤된 영역의 높이를 뺀 값이 
+    // .App 요소의 높이보다 100 픽셀 작다면 (즉, 스크롤이 하단 100픽셀 이내로 내려왔다면),
+    // 아이템을 더 로드합니다.
+    if (scrollHeight - scrollTop <= clientHeight + 100) {
+      console.log("Bottom of the div has been reached.");
+      setVisibleItemsCount((prevValue) => prevValue + 12);
+    }
+  };
+
+  // .App 요소에 대한 참조를 가져옵니다.
+  const appElement = appRef.current;
+
+  // 스크롤 이벤트 리스너를 .App 요소에 추가합니다.
+  appElement.addEventListener('scroll', handleScroll);
+
+  // 컴포넌트가 unmount될 때 스크롤 이벤트 리스너를 제거합니다.
+  // 이렇게 하는 이유는 컴포넌트가 사라진 후에도 이벤트 핸들러가 호출되는 것을 방지하기 위함입니다.
+  return () => appElement.removeEventListener('scroll', handleScroll);
+}, []); 
+
+
+///////////////////////////////////////////////////////////
+  
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className="App" ref={appRef}>
         <Header></Header>
         <main>
           <Routes>
             <Route path="/" element={<MainPage
-              bookmarkedItems={bookmarkedItems}
-              setBookmarkedItems={setBookmarkedItems}
+              bookmarkedItemsId={bookmarkedItemsId}
+              setBookmarkedItemsId={setBookmarkedItemsId}
               handleShowModal={handleShowModal}
               notifyAdd={notifyAdd}
               notifyDelete={notifyDelete}
             />}></Route>
-            <Route path="/products/list" element={<ProductsListPage />}></Route>
+            <Route path="/products/list" element={
+              <ProductsListPage
+                bookmarkedItemsId={bookmarkedItemsId}
+                setBookmarkedItemsId={setBookmarkedItemsId}
+                handleShowModal={handleShowModal}
+                notifyAdd={notifyAdd}
+                notifyDelete={notifyDelete}
+                visibleItemsCount={visibleItemsCount}
+                />}></Route>
             <Route path="/bookmark" element={<BookmarkPage />}></Route>
           </Routes>
           {showModal ? <Modal clickedItem={clickedItem}
-            bookmarkedItems={bookmarkedItems}
-            setBookmarkedItems={setBookmarkedItems}
+            bookmarkedItemsId={bookmarkedItemsId}
+            setBookmarkedItemsId={setBookmarkedItemsId}
             handleShowModal={handleShowModal}
             notifyAdd={notifyAdd}
             notifyDelete={notifyDelete}

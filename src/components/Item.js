@@ -6,7 +6,6 @@ import bookmarkOff from '../img/bookmark-off.png';
 
 export const ItemContainer = styled.li`
 list-style: none;
-margin-right:24px;
 font-size:16px;
 
 &:last-of-type{
@@ -37,6 +36,7 @@ font-size:16px;
 .content{
     display:flex;
     justify-content:space-between;
+    margin-bottom:12px;
 }
 .left{}
 .right{
@@ -55,23 +55,28 @@ font-size:16px;
 .itemTitle{
     font-weight:800;
 }
+.itemTitleProduct{
+    
+    max-width:190px;
+    font-weight:800;
+}
 .subTitle{font-weight:400;}
 `
 
-function Item({item, bookmarkedItems, setBookmarkedItems, handleShowModal, notifyAdd, notifyDelete}) {
+function Item({item, bookmarkedItemsId, setBookmarkedItemsId, handleShowModal, notifyAdd, notifyDelete}) {
 
     const [isBookmarked, setIsBookmarked] = useState(false);
 
     useEffect(() => {
-        setIsBookmarked(bookmarkedItems.some(bookmarkedItem => bookmarkedItem.id === item.id));
-      }, [bookmarkedItems]);
+        setIsBookmarked(bookmarkedItemsId.includes(item.id));
+      }, [bookmarkedItemsId]);
 
       const handleBookmark = (item) => {
         if (isBookmarked) {
-          setBookmarkedItems(bookmarkedItems.filter(el => el.id !== item.id));
+          setBookmarkedItemsId(prevItems => prevItems.filter(itemId => itemId !== item.id));
           notifyDelete();
         } else {
-          setBookmarkedItems([item, ...bookmarkedItems]);
+          setBookmarkedItemsId(prevItems => [item.id, ...prevItems]);
           notifyAdd();
         }
       }
@@ -87,7 +92,7 @@ function Item({item, bookmarkedItems, setBookmarkedItems, handleShowModal, notif
                 />
             </div>
             <div className="content">
-                <div className="left"><p className="itemTitle">{item.title}</p></div>
+                <div className="left"><p className="itemTitleProduct">{item.title}</p></div>
                 <div className="right">
                     <p className="discount">{item.discountPercentage}%</p>
                     <p>{Number(item.price).toLocaleString()}원</p>

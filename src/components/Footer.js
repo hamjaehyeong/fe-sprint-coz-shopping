@@ -5,7 +5,7 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-height:58px;
+min-height:58px;
 font-size:12px;
 background-color:white;
 color:#888888;

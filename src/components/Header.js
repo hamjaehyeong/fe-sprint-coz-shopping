@@ -8,10 +8,11 @@ import hamburgerButton from '../img/hamburger_button.png';
 import Dropdown from "./Dropdown";
 
 export const HeaderContainer = styled.header`
-position: sticky;
+position: fixed;
 display:flex;
 justify-content:space-between;
 align-items:center;
+width:1280px;
 height:80px;
 padding-left:76px;
 padding-right:76px;

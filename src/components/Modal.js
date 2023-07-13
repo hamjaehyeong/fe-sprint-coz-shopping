@@ -62,23 +62,23 @@ export const ModalContainer = styled.div`
 
 `
 
-function Modal({clickedItem, bookmarkedItems, setBookmarkedItems, handleShowModal, notifyAdd, notifyDelete}) {
+function Modal({clickedItem, bookmarkedItemsId, setBookmarkedItemsId, handleShowModal, notifyAdd, notifyDelete}) {
 
     const [isBookmarked, setIsBookmarked] = useState(false);
 
     useEffect(() => {
-        setIsBookmarked(bookmarkedItems.some(bookmarkedItem => bookmarkedItem.id === clickedItem.id));
-      }, [bookmarkedItems]);
+      setIsBookmarked(bookmarkedItemsId.includes(clickedItem.id));
+    }, [bookmarkedItemsId]);
 
-      const handleBookmark = (item) => {
-        if (isBookmarked) {
-          setBookmarkedItems(bookmarkedItems.filter(el => el.id !== item.id));
-          notifyDelete();
-        } else {
-          setBookmarkedItems([item, ...bookmarkedItems]);
-          notifyAdd();
-        }
+    const handleBookmark = (item) => {
+      if (isBookmarked) {
+        setBookmarkedItemsId(prevItems => prevItems.filter(itemId => itemId !== clickedItem.id));
+        notifyDelete();
+      } else {
+        setBookmarkedItemsId(prevItems => [item.id, ...prevItems]);
+        notifyAdd();
       }
+    }
 
     return (
         <ModalContainer>
