@@ -18,9 +18,10 @@ display:flex;
 
 margin-top:12px;
 margin-bottom:12px;
+height:267px;
 `
 
-function MainPage({bookmarkedItems, setBookmarkedItems}) {
+function MainPage({bookmarkedItems, setBookmarkedItems, handleShowModal, notifyAdd, notifyDelete}) {
     const [listData, setListData] = useState([]);
     useEffect(() =>{
         fetch('http://cozshopping.codestates-seb.link/api/v1/products?count=4')
@@ -46,6 +47,9 @@ function MainPage({bookmarkedItems, setBookmarkedItems}) {
                     item={item} 
                     bookmarkedItems={bookmarkedItems} 
                     setBookmarkedItems={setBookmarkedItems}
+                    handleShowModal={handleShowModal}
+                    notifyAdd={notifyAdd} 
+                    notifyDelete={notifyDelete}
                     />)}
                 </ListContainer>
             </div>
@@ -58,6 +62,9 @@ function MainPage({bookmarkedItems, setBookmarkedItems}) {
                     item={item} 
                     bookmarkedItems={bookmarkedItems} 
                     setBookmarkedItems={setBookmarkedItems}
+                    handleShowModal={handleShowModal}
+                    notifyAdd={notifyAdd} 
+                    notifyDelete={notifyDelete}
                     />)}
                 </ListContainer>
                 </div>

@@ -32,6 +32,9 @@ z-index: 10;
 .hamburger_img{
     width:34px;
     height:24px;
+    &:hover{
+    cursor: pointer;
+}
 }
 .rightSection{
     position:relative;
