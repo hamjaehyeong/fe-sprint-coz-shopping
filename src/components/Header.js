@@ -15,14 +15,14 @@ align-items:center;
 height:80px;
 padding-left:76px;
 padding-right:76px;
-box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.25);
+box-shadow: 0 8px 8px 0px rgba(0, 0, 0, 0.1);
 background-color:white;
-
+z-index: 10;
 .leftSection{
     display:flex;
     flex-direction:row;
     align-items:center;
-    font-weight:border;
+    font-weight:700;
 }
 .logo_img{
     width:55px;
@@ -32,6 +32,9 @@ background-color:white;
 .hamburger_img{
     width:34px;
     height:24px;
+    &:hover{
+    cursor: pointer;
+}
 }
 .rightSection{
     position:relative;

@@ -9,6 +9,8 @@ height:58px;
 font-size:12px;
 background-color:white;
 color:#888888;
+
+border-top:1px solid rgba(0, 0, 0, 0.1);
 `
 
 function Footer() {
