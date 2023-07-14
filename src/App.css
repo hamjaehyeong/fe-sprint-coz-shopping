@@ -1,14 +1,14 @@
-.App{
-    display: flex;
-    flex-direction: column;
-    width: 1280px;
-    height: 832px;
-    position:relative;
-    overflow-y: scroll;
-    -ms-overflow-style: none; /* 익스플로러, 앳지 */
-    scrollbar-width: none; /* 파이어폭스 */
+.App {
+  display: flex;
+  flex-direction: column;
+  width: 1280px;
+  height: 832px;
+  position: relative;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* 익스플로러, 앳지 */
+  scrollbar-width: none; /* 파이어폭스 */
 }
 
 .App::-webkit-scrollbar {
-    display: none; /* 크롬, 사파리, 오페라 */
+  display: none; /* 크롬, 사파리, 오페라 */
 }
