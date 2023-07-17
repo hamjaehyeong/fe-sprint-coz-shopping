@@ -1,4 +1,3 @@
-# fe-sprint-coz-shopping
 ## 관련 문서 및 링크
 [프로젝트 요구사항 및 기능명세서](https://codestates.notion.site/S4-05073c7f88a942c0ad5e5fcdd68c1dec)  
 [디자인 도큐먼트 레포지토리](https://github.com/codestates-seb/fe-sprint-coz-shopping-figma)  
